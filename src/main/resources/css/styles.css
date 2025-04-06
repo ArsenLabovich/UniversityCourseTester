@@ -1,0 +1,56 @@
+.jfx-button-custom {
+    -fx-background-color: #27264c;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-background-radius: 10px;
+    -fx-padding: 10 20 10 20;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 2);
+    -fx-transition: all 0.3s ease;
+}
+
+.jfx-button-custom:hover {
+    -fx-background-color: #212040;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 10, 0, 0, 4);
+}
+
+/* Добавим анимацию мигания */
+@keyframes blinkRed {
+    0%   { fill: #ff4d4d; }
+    50%  { fill: #800000; }
+    100% { fill: #ff4d4d; }
+}
+
+@keyframes blinkYellow {
+    0%   { fill: #ffe066; }
+    50%  { fill: #bba300; }
+    100% { fill: #ffe066; }
+}
+
+@keyframes blinkGreen {
+    0%   { fill: #66ff66; }
+    50%  { fill: #009900; }
+    100% { fill: #66ff66; }
+}
+
+/* Круги состояния */
+.circle-red {
+    -fx-fill: #ff4d4d;
+    -fx-stroke: #880000;
+    -fx-stroke-width: 1;
+}
+
+.circle-yellow {
+    -fx-fill: #ffe066;
+    -fx-stroke: #a58f00;
+    -fx-stroke-width: 1;
+}
+
+.circle-green {
+    -fx-fill: #66ff66;
+    -fx-stroke: #008000;
+    -fx-stroke-width: 1;
+}
+

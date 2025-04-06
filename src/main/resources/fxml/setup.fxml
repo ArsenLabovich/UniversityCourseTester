@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import javafx.scene.shape.Circle?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:id="anchorPane"
+            fx:controller="org.example.ui.controllers.SetupController"
+            stylesheets="@/css/styles.css"
+            style="-fx-background-color: #19182d;">
+
+    <VBox spacing="30" alignment="TOP_CENTER" prefWidth="800" prefHeight="500" layoutY="20">
+
+        <Text text="Test Configuration"
+              style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-fill: #aaa9ff;" />
+
+        <HBox spacing="20" alignment="CENTER">
+            <Text text="Compiler status:" style="-fx-fill: #aaa9ff; -fx-font-size: 16px;" />
+            <Circle fx:id="statusCircle" radius="10" fill="red" />
+            <Text fx:id="statusLabel" text="Not Found" style="-fx-fill: red; -fx-font-size: 14px;" />
+        </HBox>
+
+        <VBox  spacing="15" alignment="CENTER">
+
+            <HBox spacing="10" alignment="CENTER">
+                <JFXTextField fx:id="inputFolderField"
+                              promptText="Select Input Folder"
+                              prefWidth="500"
+                              editable="false"
+                              style="-fx-background-color: #27264c; -fx-text-fill: white;" />
+                <JFXButton fx:id="inputBrowseButton"
+                           text="Browse"
+                           styleClass="jfx-button-custom"/>
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER">
+                <JFXTextField fx:id="expectedFolderField"
+                              editable="false"
+                              promptText="Select Expected Folder"
+                              prefWidth="500"
+                              style="-fx-background-color: #27264c; -fx-text-fill: white;" />
+                <JFXButton fx:id="expectedBrowseButton"
+                           text="Browse"
+                           styleClass="jfx-button-custom"/>
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER">
+                <JFXTextField fx:id="cFileField"
+                              editable="false"
+                              promptText="Select your C file"
+                              prefWidth="500"
+                              style="-fx-background-color: #27264c; -fx-text-fill: white;" />
+                <JFXButton fx:id="cFileButton"
+                           text="Browse"
+                           styleClass="jfx-button-custom"/>
+            </HBox>
+
+            <HBox spacing="20" alignment="CENTER">
+                <Text text="C File status:" style="-fx-fill: #aaa9ff; -fx-font-size: 16px;" />
+                <Circle fx:id="fileStatusCircle" radius="10" fill="red" />
+                <Text fx:id="fileStatusLabel" text="Not Found" style="-fx-fill: red; -fx-font-size: 14px;" />
+            </HBox>
+        </VBox>
+
+        <JFXButton fx:id="startTestingButton"
+                   text="Start Testing"
+                   styleClass="jfx-button-custom"
+                   prefWidth="200" />
+    </VBox>
+</AnchorPane>

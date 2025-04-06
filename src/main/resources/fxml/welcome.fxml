@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="anchorPane" style="-fx-background-color: #19182d;" stylesheets="@/css/styles.css"
+            xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.ui.controllers.WelcomeController">
+
+    <StackPane prefHeight="600.0" prefWidth="800.0">
+
+        <Text style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-fill: #aaa9ff;" text="Welcome to B-PROG2 Tester !"
+              translateX="100" translateY="40" StackPane.alignment="TOP_CENTER">
+            <StackPane.margin>
+                <Insets right="100.0"/>
+            </StackPane.margin>
+        </Text>
+
+        <JFXButton fx:id="startButton" styleClass="jfx-button-custom" text="Start Testing"
+                   StackPane.alignment="CENTER"/>
+    </StackPane>
+</AnchorPane>
