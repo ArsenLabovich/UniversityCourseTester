@@ -31,6 +31,7 @@ public class JavaFXApp extends Application {
         primaryStage = stage;
         Parent root = Navigation.loadFXML("welcome.fxml");
         Scene scene = new Scene(Objects.requireNonNull(root));
+        primaryStage.setResizable(false);
         stage.setScene(scene);
         stage.setTitle("B-PROG2 Testing Tool");
         stage.show();

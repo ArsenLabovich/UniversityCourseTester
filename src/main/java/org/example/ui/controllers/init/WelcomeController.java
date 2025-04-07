@@ -1,4 +1,4 @@
-package org.example.ui.controllers;
+package org.example.ui.controllers.init;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

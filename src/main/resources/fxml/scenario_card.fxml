@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<HBox alignment="CENTER_LEFT" maxHeight="80.0" maxWidth="600.0" prefHeight="80" prefWidth="600.0" spacing="20" styleClass="scenario-card" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.controllers.overview.ScenarioCardController">
+
+    <!-- Scenario Number and Name -->
+    <VBox maxWidth="270.0" prefWidth="270.0" spacing="5">
+        <Text fx:id="scenarioNameText" style="-fx-fill: #ffffff; -fx-font-size: 18px; -fx-font-weight: bold;" />
+        <Text fx:id="scenarioTestCountText" style="-fx-fill: #cccccc; -fx-font-size: 14px;" />
+    </VBox>
+
+    <!-- Status Circle -->
+    <HBox alignment="CENTER_LEFT" spacing="5">
+        <Circle fx:id="statusCircle" radius="10" />
+        <Text fx:id="statusText" style="-fx-fill: #ffffff; -fx-font-size: 14px;" />
+    </HBox>
+
+    <Region HBox.hgrow="ALWAYS" />
+
+    <!-- Details Button -->
+    <JFXButton fx:id="detailsButton" styleClass="jfx-button-custom" text="Details" />
+</HBox>

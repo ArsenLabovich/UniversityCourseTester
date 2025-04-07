@@ -7,7 +7,7 @@
 
 <AnchorPane fx:id="anchorPane" style="-fx-background-color: #19182d;" stylesheets="@/css/styles.css"
             xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="org.example.ui.controllers.WelcomeController">
+            fx:controller="org.example.ui.controllers.init.WelcomeController">
 
     <StackPane prefHeight="600.0" prefWidth="800.0">
 

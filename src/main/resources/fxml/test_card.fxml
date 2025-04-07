@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Text?>
+
+<HBox xmlns="http://javafx.com/javafx/17.0.12"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.ui.controllers.scenario.TestCardController"
+      alignment="CENTER_LEFT"
+      maxHeight="70.0"
+      maxWidth="580.0"
+      prefHeight="70.0"
+      prefWidth="580.0"
+      spacing="20"
+      styleClass="test-card">
+
+    <!-- Test Number and Exit Code -->
+    <VBox maxWidth="250.0" prefWidth="250.0" spacing="5">
+        <Text fx:id="testNumberText"
+              style="-fx-fill: #ffffff; -fx-font-size: 16px; -fx-font-weight: bold;" />
+        <Text fx:id="exitCodeText"
+              style="-fx-fill: #cccccc; -fx-font-size: 14px;" />
+    </VBox>
+
+    <!-- Status Indicator -->
+    <HBox alignment="CENTER_LEFT" spacing="5">
+        <Circle fx:id="statusCircle" radius="8" />
+        <Text fx:id="statusText"
+              style="-fx-fill: #ffffff; -fx-font-size: 14px;" />
+    </HBox>
+
+    <Region HBox.hgrow="ALWAYS"/>
+
+    <!-- Details Button -->
+    <JFXButton fx:id="detailsButton"
+               text="Details"
+               styleClass="jfx-button-custom"/>
+</HBox>

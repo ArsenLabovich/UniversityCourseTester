@@ -1,4 +1,4 @@
-package org.example.ui.controllers;
+package org.example.ui.controllers.init;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -13,8 +13,11 @@ import javafx.stage.Stage;
 import lombok.Setter;
 import org.example.JavaFXApp;
 import org.example.envpreparation.GCCTool;
+import org.example.ui.FileState;
+import org.example.ui.Navigation;
 
 import java.io.File;
+import java.io.IOException;
 
 public class SetupController {
 
@@ -36,14 +39,9 @@ public class SetupController {
     @FXML
     private JFXTextField inputFolderField;
 
-    @FXML
-    private JFXTextField expectedFolderField;
 
     @FXML
     private JFXButton inputBrowseButton;
-
-    @FXML
-    private JFXButton expectedBrowseButton;
 
     @FXML
     private JFXButton startTestingButton;
@@ -57,10 +55,6 @@ public class SetupController {
     @Setter
     private Stage primaryStage;
 
-    private File inputFolder;
-    private File expectedFolder;
-
-    private File cFile;
 
     @FXML
     public void initialize() {
@@ -80,32 +74,26 @@ public class SetupController {
 
         inputBrowseButton.setOnAction(e -> {
             File folder = chooseDirectory();
-            if (isFolder(folder)) {
+            if (!isFolder(folder)) {
+                showError("Please select a valid folder.");
+            } else if (folder.getAbsolutePath().contains("stdin") || folder.getAbsolutePath().contains("stdout")) {
+                showError("Please select a folder that does not contain 'stdin' or 'stdout' in its name.");
+            } else if (!doStdinAndStdoutExist(folder)) {
+                showError("Please select a valid folder with 'stdin' and 'stdout' directories.");
+            } else {
                 inputFolderField.setText(folder.getAbsolutePath());
-                inputFolder = folder;
-            } else {
-                showError("Please select a valid folder.");
+                FileState.setInputFolder(folder);
             }
-
-
+            updateStartTestingButton();
         });
 
-        expectedBrowseButton.setOnAction(e -> {
-            File folder = chooseDirectory();
-            if (isFolder(folder)) {
-                expectedFolderField.setText(folder.getAbsolutePath());
-                expectedFolder = folder;
-            } else {
-                showError("Please select a valid folder.");
-            }
-        });
 
         cFileButton.setOnAction(e -> {
             File file = chooseFile();
             if (isCFile(file)) {
                 cFileField.setText(file.getAbsolutePath());
-                cFile = file;
-                if (GCCTool.compileFile(cFile.getAbsolutePath(), "output.exe")) {
+                FileState.setCFile(file);
+                if (GCCTool.compileFile(FileState.getCFile().getAbsolutePath(), "output.exe")) {
                     updateCFileStatus("OK");
                 } else {
                     updateCFileStatus("IS_NOT_COMPILABLE");
@@ -113,10 +101,11 @@ public class SetupController {
             } else {
                 showError("Please select a valid C file.");
             }
+            updateStartTestingButton();
+
         });
         startTestingButton.setOnAction(e -> startTesting());
 
-        // Register shutdown hook to delete the file
         Runtime.getRuntime().addShutdownHook(new Thread(this::deleteOutputFile));
     }
 
@@ -134,7 +123,11 @@ public class SetupController {
     }
 
     private void startTesting() {
-        // TO DO: Implement the logic to start testing
+        try {
+            Navigation.switchTo("overview.fxml");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void showError(String msg) {
@@ -195,6 +188,15 @@ public class SetupController {
         return file.exists() && file.isDirectory();
     }
 
+    private boolean doStdinAndStdoutExist(File folder) {
+        if (folder == null || !folder.isDirectory()) {
+            return false;
+        }
+        File stdinDir = new File(folder, "stdin");
+        File stdoutDir = new File(folder, "stdout");
+        return stdinDir.exists() && stdinDir.isDirectory() && stdoutDir.exists() && stdoutDir.isDirectory();
+    }
+
     private boolean isCFile(File file) {
         if (file == null) {
             return false;
@@ -209,4 +211,8 @@ public class SetupController {
         }
     }
 
+    private void updateStartTestingButton() {
+        startTestingButton.setDisable(!(statusLabel.getText().equals("Compiler OK") && fileStatusLabel.getText().equals("C File OK") && FileState.getInputFolder() != null));
+
+    }
 }

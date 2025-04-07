@@ -9,7 +9,7 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:id="anchorPane"
-            fx:controller="org.example.ui.controllers.SetupController"
+            fx:controller="org.example.ui.controllers.init.SetupController"
             stylesheets="@/css/styles.css"
             style="-fx-background-color: #19182d;">
 
@@ -28,22 +28,11 @@
 
             <HBox spacing="10" alignment="CENTER">
                 <JFXTextField fx:id="inputFolderField"
-                              promptText="Select Input Folder"
+                              promptText="Select Folder where 'stdin' and 'stdout' directories are."
                               prefWidth="500"
                               editable="false"
                               style="-fx-background-color: #27264c; -fx-text-fill: white;" />
                 <JFXButton fx:id="inputBrowseButton"
-                           text="Browse"
-                           styleClass="jfx-button-custom"/>
-            </HBox>
-
-            <HBox spacing="10" alignment="CENTER">
-                <JFXTextField fx:id="expectedFolderField"
-                              editable="false"
-                              promptText="Select Expected Folder"
-                              prefWidth="500"
-                              style="-fx-background-color: #27264c; -fx-text-fill: white;" />
-                <JFXButton fx:id="expectedBrowseButton"
                            text="Browse"
                            styleClass="jfx-button-custom"/>
             </HBox>
@@ -68,6 +57,7 @@
 
         <JFXButton fx:id="startTestingButton"
                    text="Start Testing"
+                   disable="true"
                    styleClass="jfx-button-custom"
                    prefWidth="200" />
     </VBox>

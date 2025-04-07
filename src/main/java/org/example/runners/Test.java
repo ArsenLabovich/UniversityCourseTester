@@ -3,7 +3,10 @@ package org.example.runners;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -32,7 +35,7 @@ public class Test implements Runnable {
             executeProgram();
             finishTest();
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            e.printStackTrace();
             setErrorFailed();
         }
     }
@@ -40,31 +43,20 @@ public class Test implements Runnable {
     private void executeProgram() throws IOException, InterruptedException {
         ProcessBuilder processBuilder = new ProcessBuilder("./output.exe");
         processBuilder.redirectErrorStream(true);
+        processBuilder.redirectInput(new File(pathToInput));
         Process process = processBuilder.start();
 
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-
-        BufferedReader inputReader = new BufferedReader(new FileReader(pathToInput));
-        StringBuilder outputBuilder = new StringBuilder();
-        String line;
-        while ((line = inputReader.readLine()) != null) {
-            writer.write(line);
-            writer.newLine();
-            writer.flush();
-            while (reader.ready()) {
-                outputBuilder.append(reader.readLine()).append(System.lineSeparator());
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+            StringBuilder outputBuilder = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                outputBuilder.append(line).append(System.lineSeparator());
             }
+            this.programOutput = outputBuilder.toString().trim();
+            this.exitCode = process.waitFor();
+        } finally {
+            process.destroy();
         }
-
-        while ((line = reader.readLine()) != null) {
-            outputBuilder.append(line).append(System.lineSeparator());
-        }
-        reader.close();
-        inputReader.close();
-        writer.close();
-        this.programOutput = outputBuilder.toString().trim();
-        this.exitCode = process.waitFor();
     }
 
     private void setErrorFailed() {
@@ -80,17 +72,7 @@ public class Test implements Runnable {
     }
 
     public String toString() {
-        return "Test{" +
-                "\nisFinished=" + isFinished +
-                "\nisPassed=" + isPassed +
-                "\npathToInput='" + pathToInput + '\'' +
-                "\npathToExpected='" + pathToExpected + '\'' +
-                "\nscenarioNumber=" + scenarioNumber +
-                "\ntestNumber=" + testNumber +
-                "\nprogramOutput='" + programOutput + '\'' +
-                "\nexpectedOutput='" + expectedOutput + '\'' +
-                "\nexitCode=" + exitCode +
-                "\n}";
+        return "Test{" + "\nisFinished=" + isFinished + "\nisPassed=" + isPassed + "\npathToInput='" + pathToInput + '\'' + "\npathToExpected='" + pathToExpected + '\'' + "\nscenarioNumber=" + scenarioNumber + "\ntestNumber=" + testNumber + "\nprogramOutput='" + programOutput + '\'' + "\nexpectedOutput='" + expectedOutput + '\'' + "\nexitCode=" + exitCode + "\n}";
     }
 
 }

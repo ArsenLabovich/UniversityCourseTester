@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.web.WebView?>
+<BorderPane prefHeight="600" prefWidth="1200" style="-fx-background-color: #19182d;" stylesheets="@/css/styles.css"
+            xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.ui.controllers.test.DetailedViewController">
+
+    <top>
+        <VBox>
+            <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-padding: 15;">
+                <Text fx:id="titleText" style="-fx-font-size: 20px; -fx-fill: #ffffff;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <JFXButton fx:id="backButton" styleClass="jfx-button-custom" text="Back"/>
+            </HBox>
+
+            <!-- labels above diff viewer -->
+            <HBox alignment="CENTER">
+                <Text style="-fx-fill: #aaaaaa; -fx-font-size: 24px; -fx-font-weight: bold" text="Your Output">
+                    <HBox.margin>
+                        <Insets right="225.0"/>
+                    </HBox.margin>
+                </Text>
+                <Text style="-fx-fill: #aaaaaa; -fx-font-size: 24px; -fx-font-weight: bold" text="Expected Output">
+                    <HBox.margin>
+                        <Insets left="225.0"/>
+                    </HBox.margin>
+                </Text>
+                <VBox.margin>
+                    <Insets/>
+                </VBox.margin>
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <WebView fx:id="webView" prefHeight="500.0" prefWidth="1100.0"/>
+    </center>
+</BorderPane>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Mergely Viewer</title>
+
+    <!-- Внешние стили -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mergely@4.0.0/lib/mergely.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.32.0/codemirror.min.css" />
+
+    <!-- Внешние скрипты -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.32.0/codemirror.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mergely@4.0.0/lib/mergely.js"></script>
+
+    <style>
+        html, body, #mergely {
+            height: 100%;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="mergely"></div>
+
+<script>
+    $(document).ready(function () {
+        $('#mergely').mergely({
+            lhs: function(setValue) {
+                setValue('__LHS__');
+            },
+            rhs: function(setValue) {
+                setValue('__RHS__');
+            }
+        });
+    });
+</script>
+</body>
+</html>
