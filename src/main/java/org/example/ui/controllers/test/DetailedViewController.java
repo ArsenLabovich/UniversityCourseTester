@@ -35,7 +35,7 @@ public class DetailedViewController {
         setData("Scenario #" + test.getScenarioNumber() + " - Test #" + test.getTestNumber(), test.getProgramOutput(), test.getExpectedOutput());
         backButton.setOnAction(e -> {
             try {
-                Navigation.switchTo("/scenario_overview.fxml");
+                Navigation.switchTo("scenario_overview.fxml");
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
