@@ -34,13 +34,18 @@ public class TestCardController {
         exitCodeText.setText("Exit Code: " + test.getExitCode());
 
         Boolean isPassed = test.getIsPassed();
-        if (Boolean.TRUE.equals(isPassed)) {
+        Boolean isPassedWithSpaces = test.getIsPassedWithSpaces();
+        if (Boolean.TRUE.equals(isPassed)&&Boolean.TRUE.equals(isPassedWithSpaces)) {
             statusText.setText("Passed");
             statusCircle.setFill(Paint.valueOf("#32CD32")); // Lime green
-        } else if (Boolean.FALSE.equals(isPassed)) {
+        } else if (Boolean.FALSE.equals(isPassed)&&Boolean.FALSE.equals(isPassedWithSpaces)) {
             statusText.setText("Failed");
             statusCircle.setFill(Paint.valueOf("#FF5555")); // Red
-        } else {
+        }else if (Boolean.TRUE.equals(isPassed)||Boolean.TRUE.equals(isPassedWithSpaces)) {
+            statusText.setText("Spaces mismatching");
+            statusCircle.setFill(Paint.valueOf("#FFA500")); // Orange
+        }
+        else {
             statusText.setText("Unknown");
             statusCircle.setFill(Paint.valueOf("#aaaaaa")); // Gray
         }

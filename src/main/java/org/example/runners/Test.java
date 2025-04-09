@@ -2,6 +2,7 @@ package org.example.runners;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.example.strtools.StringComparator;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,6 +18,7 @@ public class Test implements Runnable {
     private Boolean isFinished = false;
 
     private Boolean isPassed = null;
+    private Boolean isPassedWithSpaces = null;
 
     private final String pathToInput;
     private final String pathToExpected;
@@ -61,13 +63,15 @@ public class Test implements Runnable {
 
     private void setErrorFailed() {
         isPassed = false;
+        isPassedWithSpaces = false;
         exitCode = -1;
         programOutput = null;
     }
 
     private void finishTest() throws IOException {
         this.expectedOutput = new String(Files.readAllBytes(Paths.get(pathToExpected))).trim();
-        this.isPassed = this.programOutput.equals(this.expectedOutput);
+        this.isPassed = StringComparator.isEquivalent(this.expectedOutput, this.programOutput);
+        this.isPassedWithSpaces = StringComparator.isEquivalentByDiff(this.expectedOutput, this.programOutput);
         this.isFinished = true;
     }
 
