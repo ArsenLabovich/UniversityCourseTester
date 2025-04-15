@@ -43,5 +43,4 @@ z3_testing_extra
 z4_testing
 cProject
 file.txt
-dependency-reduced-pom.xml
 .idea
