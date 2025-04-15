@@ -43,7 +43,13 @@ public class Test implements Runnable {
     }
 
     private void executeProgram() throws IOException, InterruptedException {
-        ProcessBuilder processBuilder = new ProcessBuilder("./output.exe");
+        Integer n = getN(scenarioNumber, testNumber);
+        ProcessBuilder processBuilder = null;
+        if(n == null) {
+            processBuilder = new ProcessBuilder("./output.exe");
+        }else{
+            processBuilder = new ProcessBuilder("./output.exe", n.toString());
+        }
         processBuilder.redirectErrorStream(true);
         processBuilder.redirectInput(new File(pathToInput));
         Process process = processBuilder.start();
@@ -77,6 +83,24 @@ public class Test implements Runnable {
 
     public String toString() {
         return "Test{" + "\nisFinished=" + isFinished + "\nisPassed=" + isPassed + "\npathToInput='" + pathToInput + '\'' + "\npathToExpected='" + pathToExpected + '\'' + "\nscenarioNumber=" + scenarioNumber + "\ntestNumber=" + testNumber + "\nprogramOutput='" + programOutput + '\'' + "\nexpectedOutput='" + expectedOutput + '\'' + "\nexitCode=" + exitCode + "\n}";
+    }
+
+    private Integer getN(int scenario, int testNumber) {
+        return switch (scenario) {
+            case 1, 3, 5, 6 -> null; // В этих сценариях N не задаётся
+            case 2 -> 0; // В сценарии 2 всегда N=0
+            case 4 -> switch (testNumber) {
+                case 1, 7 -> 10;
+                case 2 -> 5;
+                case 3 -> 14;
+                case 4, 8 -> 12;
+                case 5 -> 11;
+                case 6 -> 16;
+                case 9 -> 190;
+                default -> null; // неизвестный тест
+            };
+            default -> null; // неизвестный сценарий
+        };
     }
 
 }

@@ -40,7 +40,7 @@
             <HBox spacing="10" alignment="CENTER">
                 <JFXTextField fx:id="cFileField"
                               editable="false"
-                              promptText="Select your C file"
+                              promptText="Select root directory of your project."
                               prefWidth="500"
                               style="-fx-background-color: #27264c; -fx-text-fill: white;" />
                 <JFXButton fx:id="cFileButton"
@@ -49,7 +49,7 @@
             </HBox>
 
             <HBox spacing="20" alignment="CENTER">
-                <Text text="C File status:" style="-fx-fill: #aaa9ff; -fx-font-size: 16px;" />
+                <Text text="Project status:" style="-fx-fill: #aaa9ff; -fx-font-size: 16px;" />
                 <Circle fx:id="fileStatusCircle" radius="10" fill="red" />
                 <Text fx:id="fileStatusLabel" text="Not Found" style="-fx-fill: red; -fx-font-size: 14px;" />
             </HBox>

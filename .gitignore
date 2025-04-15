@@ -41,3 +41,8 @@ main.c
 output.exe
 z3_testing
 z3_testing_extra
+z4_testing
+cProject
+file.txt
+dependency-reduced-pom.xml
+.idea

@@ -20,6 +20,11 @@ public class GCCTool {
         return runCommand("gcc " + filePath + " -o " + outputFileName) != null;
     }
 
+    public static boolean compileProject(String includePath, String dataCPath, String z4CPath, String outputFileName) {
+        String command = "gcc -I" + includePath + " " + z4CPath + " " + dataCPath + " -o " + outputFileName;
+        return runCommand(command) != null;
+    }
+
     private static String runCommand(String command) {
         try {
             Process process = startProcess(command);

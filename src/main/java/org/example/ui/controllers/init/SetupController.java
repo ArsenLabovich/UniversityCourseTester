@@ -89,17 +89,20 @@ public class SetupController {
 
 
         cFileButton.setOnAction(e -> {
-            File file = chooseFile();
-            if (isCFile(file)) {
+            File file = chooseDirectory();
+            if (isValidProject(file)) {
                 cFileField.setText(file.getAbsolutePath());
-                FileState.setCFile(file);
-                if (GCCTool.compileFile(FileState.getCFile().getAbsolutePath(), "output.exe")) {
+                FileState.setProjectFolder(file);
+                String includePath = FileState.getIncludeFolder().getAbsolutePath();
+                String dataCPath = FileState.getDataCFile().getAbsolutePath();
+                String z4CPath = FileState.getCFile().getAbsolutePath();
+                if (GCCTool.compileProject(includePath, dataCPath, z4CPath, "output.exe")) {
                     updateCFileStatus("OK");
                 } else {
                     updateCFileStatus("IS_NOT_COMPILABLE");
                 }
             } else {
-                showError("Please select a valid C file.");
+                showError("Please select a valid C project folder.");
             }
             updateStartTestingButton();
 
@@ -113,13 +116,6 @@ public class SetupController {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle("Select Folder");
         return chooser.showDialog(primaryStage);
-    }
-
-    private File chooseFile() {
-        FileChooser chooser = new FileChooser();
-        chooser.setTitle("Select C File");
-        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("C Files", "*.c"));
-        return chooser.showOpenDialog(primaryStage);
     }
 
     private void startTesting() {
@@ -164,18 +160,18 @@ public class SetupController {
         switch (status) {
             case "OK":
                 fileStatusCircle.getStyleClass().add("circle-green");
-                fileStatusLabel.setText("C File OK");
+                fileStatusLabel.setText("Project OK");
                 fileStatusLabel.setStyle("-fx-fill: #66ff66;");
                 break;
             case "NOT_SELECTED":
                 fileStatusCircle.getStyleClass().add("circle-yellow");
-                fileStatusLabel.setText("C File is not selected");
+                fileStatusLabel.setText("Project is not selected");
                 fileStatusLabel.setStyle("-fx-fill: #ffe066;");
                 break;
             case "IS_NOT_COMPILABLE":
             default:
                 fileStatusCircle.getStyleClass().add("circle-red");
-                fileStatusLabel.setText("C File is not compilable");
+                fileStatusLabel.setText("Project is not compilable");
                 fileStatusLabel.setStyle("-fx-fill: #ff4d4d;");
                 break;
         }
@@ -197,11 +193,22 @@ public class SetupController {
         return stdinDir.exists() && stdinDir.isDirectory() && stdoutDir.exists() && stdoutDir.isDirectory();
     }
 
-    private boolean isCFile(File file) {
+
+    private boolean isValidProject(File file) {
         if (file == null) {
             return false;
         }
-        return file.exists() && file.isFile() && file.getName().endsWith(".c");
+        File includeDir = new File(file, "include");
+        File srcDir = new File(file, "src");
+
+        File dataH = new File(includeDir, "data.h");
+        File dataC = new File(srcDir, "data.c");
+        File z4C = new File(srcDir, "z4.c");
+
+        return dataH.exists() && dataH.isFile() &&
+                dataC.exists() && dataC.isFile() &&
+                z4C.exists() && z4C.isFile();
+
     }
 
     private void deleteOutputFile() {
@@ -212,7 +219,7 @@ public class SetupController {
     }
 
     private void updateStartTestingButton() {
-        startTestingButton.setDisable(!(statusLabel.getText().equals("Compiler OK") && fileStatusLabel.getText().equals("C File OK") && FileState.getInputFolder() != null));
+        startTestingButton.setDisable(!(statusLabel.getText().equals("Compiler OK") && fileStatusLabel.getText().equals("Project OK") && FileState.getInputFolder() != null));
 
     }
 }
